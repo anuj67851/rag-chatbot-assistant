@@ -19,6 +19,9 @@ This project is a document-aware chatbot built with Python, using LangChain and 
    ```
 
 2. **Install Dependencies: Install the required packages using ```pip```**:
+  
+    Creation of a virtual environment is recommended.
+
     ```bash
     pip install -r requirements.txt
     ```
@@ -39,16 +42,12 @@ This project is a document-aware chatbot built with Python, using LangChain and 
 
 Run the `processor.py` script to start monitoring the designated input folder for new documents as well as setting up chroma and logging.
 
-    ```bash
     python processor.py
-    ```
 
 
 Run the `chatbot.py` script to launch the Gradio-based chatbot.
 
-    ```bash
     python chatbot.py
-    ```
 
 2. **Add Documents**: Place documents in the `input` folder for real-time updates to the vector store. Supported formats include `.pdf`, `.txt`, `.docx`, `.doc` and `.md`.
 
