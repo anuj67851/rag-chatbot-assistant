@@ -1,0 +1,2 @@
+asctime,levelname,message,filename,funcName,lineno
+"2024-11-07 16:15:42,356","INFO","Successfully processed file: files\input\clara.md","logging_utility.py","log_success","64"
