@@ -1,4 +1,3 @@
-# chatbot.py
 import os
 import gradio as gr
 from langchain_openai import ChatOpenAI
@@ -15,7 +14,7 @@ load_dotenv()
 # Constants
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 MODEL_NAME = os.getenv("MODEL_NAME")
-TEMPERATURE = os.getenv("TEMPERATURE")
+TEMPERATURE = float(os.getenv("TEMPERATURE"))
 
 DB_NAME = os.getenv("DB_NAME")
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE"))
@@ -49,7 +48,7 @@ def chat(message, history):
     retrieved_docs = retriever.invoke(message)
 
     print(
-        f"Number of documents in store: {len(vector_store_manager.vectorstore.get()['documents'])}"
+        f"Number of documents in store: {len(vector_store_manager.vector_store.get()['documents'])}"
     )
     print(f"Number of documents retrieved: {len(retrieved_docs)}")
 

@@ -73,17 +73,17 @@ class FolderMonitor:
             # Adding a file lock to ensure no other thread can modify the file
             with open(file_path, "rb") as f:
                 content = self.file_handler.read_file_contents(file_path)
-                self.vector_store_manager.add_content_to_vectordb(content)
+                self.vector_store_manager.add_content_to_db(content)
 
             # Move file after it has been processed
             shutil.move(
                 file_path,
-                os.path.join(self.processed_folder, os.path.basename(file_path)),
+                str(os.path.join(self.processed_folder, os.path.basename(file_path))),
             )
             self.logger.log_success(file_path)
 
         except Exception as e:
             shutil.move(
-                file_path, os.path.join(self.error_folder, os.path.basename(file_path))
+                file_path, str(os.path.join(self.error_folder, os.path.basename(file_path)))
             )
             self.logger.log_error(file_path, str(e))
