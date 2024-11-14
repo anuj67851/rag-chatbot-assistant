@@ -47,6 +47,7 @@ def chat(message, history):
     retriever = vector_store_manager.as_retriever()
     retrieved_docs = retriever.invoke(message)
 
+
     print(
         f"Number of documents in store: {len(vector_store_manager.vector_store.get()['documents'])}"
     )

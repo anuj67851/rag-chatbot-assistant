@@ -21,6 +21,12 @@ This project is a document-aware chatbot built with Python, using LangChain and 
 2. **Install Dependencies: Install the required packages using ```pip```**:
   
     Creation of a virtual environment is recommended.
+   
+    Update pip first.
+
+   ```bash
+   python -m pip install --upgrade pip
+   ```
 
     ```bash
     pip install -r requirements.txt

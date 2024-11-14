@@ -16,14 +16,12 @@ class VectorStoreManager:
 
     def _initialize_vector_store(self):
         if os.path.exists(self.db_name):
-            return Chroma(
-                persist_directory=self.db_name, embedding_function=self.embeddings
-            )
+            print("Data directory found, reusing it.")
         else:
             print("Persisted directory not found, initializing a new one.")
-            return Chroma(
-                persist_directory=self.db_name, embedding_function=self.embeddings
-            )
+        return Chroma(
+            persist_directory=self.db_name, embedding_function=self.embeddings
+        )
 
     def reload(self):
         """Reload vector store if needed."""
