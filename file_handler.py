@@ -2,6 +2,7 @@ import os
 from PyPDF2 import PdfReader
 from docx import Document
 import markdown2
+import re
 
 
 class FileHandler:
@@ -12,17 +13,25 @@ class FileHandler:
 
         try:
             if extension == ".pdf":
-                return self._read_pdf(file_path)
+                return self.clean_text(self._read_pdf(file_path))
             elif extension == ".txt":
-                return self._read_text(file_path)
+                return self.clean_text(self._read_text(file_path))
             elif extension in [".doc", ".docx"]:
-                return self._read_doc(file_path)
+                return self.clean_text(self._read_doc(file_path))
             elif extension == ".md":
-                return self._read_markdown(file_path)
+                return self.clean_text(self._read_markdown(file_path))
             else:
                 raise ValueError(f"Unsupported file type: {extension}")
         except Exception as e:
             raise RuntimeError(f"Error reading file: {str(e)}")
+
+    def clean_text(self, text):
+        text = re.sub(r"\n\s*\n+", "\n", text).strip() # multiple blank lines
+        text = text.strip()  # Remove leading/trailing whitespaces
+        text = re.sub(r"[ \t]+", " ", text)  # Normalize spaces
+        text = re.sub(r"[^\x00-\x7F]+", "", text)  # Remove non-ASCII characters
+        text = re.sub(r"[^\w\s.,!?'-]", "", text)  # Keep only letters, numbers, and basic punctuation
+        return text
 
     def _read_pdf(self, file_path):
         pdf_reader = PdfReader(file_path)

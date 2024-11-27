@@ -1,16 +1,16 @@
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 
 
 class VectorStoreManager:
-    def __init__(self, db_name, chunk_size=1000, chunk_overlap=500, retriever_size=10):
+    def __init__(self, db_name, chunk_size=1000, chunk_overlap=100, retriever_size=10):
         self.db_name = db_name
         self.retriever_size = retriever_size
         self.embeddings = OpenAIEmbeddings()
-        self.text_splitter = CharacterTextSplitter(
-            chunk_size=chunk_size, chunk_overlap=chunk_overlap
+        self.text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size, chunk_overlap=chunk_overlap, separators=["\n\n", "\n", " ", ""]
         )
         self.vector_store = self._initialize_vector_store()
 
