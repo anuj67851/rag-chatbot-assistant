@@ -31,6 +31,7 @@ class FileHandler:
         text = re.sub(r"[ \t]+", " ", text)  # Normalize spaces
         text = re.sub(r"[^\x00-\x7F]+", "", text)  # Remove non-ASCII characters
         text = re.sub(r"[^\w\s.,!?'-]", "", text)  # Keep only letters, numbers, and basic punctuation
+        text = text.strip()
         return text
 
     def _read_pdf(self, file_path):

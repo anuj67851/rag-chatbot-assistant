@@ -1,17 +1,19 @@
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker
 import os
 
 
 class VectorStoreManager:
-    def __init__(self, db_name, chunk_size=1000, chunk_overlap=100, retriever_size=10):
+    def __init__(self, db_name, chunk_size=2000, chunk_overlap=200, retriever_size=40):
         self.db_name = db_name
         self.retriever_size = retriever_size
         self.embeddings = OpenAIEmbeddings()
         self.text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=chunk_size, chunk_overlap=chunk_overlap, separators=["\n\n", "\n", " ", ""]
+            chunk_size=chunk_size, chunk_overlap=chunk_overlap, separators=["\n\n", "\n", " "]
         )
+        self.sem_chunker = SemanticChunker(OpenAIEmbeddings())
         self.vector_store = self._initialize_vector_store()
 
     def _initialize_vector_store(self):
@@ -35,5 +37,6 @@ class VectorStoreManager:
 
     def add_content_to_db(self, content):
         chunks = self.text_splitter.split_text(content)
+        print(f"Adding {len(chunks)} chunks to vector store.")
         self.vector_store.add_texts(chunks)
         print(f"Vectorstore updated with {len(chunks)} chunks")
